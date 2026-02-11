@@ -1,799 +1,1475 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohammed Ibrahim - Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Mohammed Ibrahim – Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
     <style>
-        * {
+        /* --------------------- RESET --------------------- */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #050505;
+            --bg-elevated: #0d0d0d;
+            --bg-soft: #151515;
+            --fg: #f5f5f5;
+            --fg-muted: #b3b3b3;
+            --accent: #ffffff;
+            --border-subtle: #222;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 22px 45px rgba(0,0,0,0.8);
+            --shadow-subtle: 0 8px 20px rgba(0,0,0,0.45);
+            --transition-fast: 180ms ease-out;
+            --transition-med: 260ms ease-out;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                         "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(circle at top, #191919 0, #050505 55%);
+            color: var(--fg);
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --------------------- LAYOUT --------------------- */
+        .page {
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 18px 64px;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
+            position: sticky;
             top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            backdrop-filter: blur(16px);
+            background: linear-gradient(to bottom, rgba(5,5,5,0.94), rgba(5,5,5,0.78));
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
 
-        nav {
+        .nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            justify-content: space-between;
+            padding: 14px 0;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .nav-name-role {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-name {
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .nav-role {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            align-items: center;
+            gap: 22px;
+            font-size: 0.85rem;
         }
 
         .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width var(--transition-fast);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pill {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.16);
+            padding: 7px 13px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(10,10,10,0.9);
+        }
+
+        .pill i {
+            font-size: 0.7rem;
+        }
+
+        .btn-small {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.28);
+            padding: 7px 16px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff10;
+            cursor: pointer;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .btn-small:hover {
+            background: #ffffff18;
+            transform: translateY(-1px);
+        }
+
+        .btn-small i {
+            font-size: 0.75rem;
+        }
+
+        /* --------------------- HERO --------------------- */
+        main {
+            margin-top: 28px;
         }
 
         .hero {
-            margin-top: 80px;
-            padding: 4rem 0;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            margin: 0 auto 2rem;
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+            gap: 40px;
+            padding: 26px 0 12px;
             align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-buttons {
+        .badge-row {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
             flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.4s both;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .badge {
+            font-size: 0.78rem;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: #ffffff08;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 6px;
+            color: var(--fg-muted);
         }
 
-        .btn-primary {
-            background: white;
-            color: #667eea;
+        .badge i {
+            font-size: 0.7rem;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        section {
-            padding: 4rem 0;
-            background: white;
-            margin: 2rem 0;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
+        .hero-sub {
+            font-size: 0.95rem;
+            color: var(--fg-muted);
+            max-width: 560px;
             line-height: 1.8;
         }
 
-        .stats {
+        .hero-sub strong {
+            font-weight: 600;
+            color: var(--fg);
+        }
+
+        .hero-meta {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 24px;
         }
 
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 15px;
-            transform: translateY(0);
-            transition: transform 0.3s ease;
+        .hero-meta-item {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
         }
 
-        .stat-card:hover {
-            transform: translateY(-10px);
+        .hero-meta-label {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.7rem;
+            margin-bottom: 4px;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .hero-meta-value {
+            color: var(--fg);
         }
 
-        .skills-grid {
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .btn-primary {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 22px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f5f5;
+            color: #000;
+            cursor: pointer;
+            transition: transform var(--transition-med), box-shadow var(--transition-med);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-ghost {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            cursor: pointer;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .btn-ghost:hover {
+            background: #ffffff10;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary i,
+        .btn-ghost i {
+            font-size: 0.9rem;
+        }
+
+        .hero-right {
+            justify-self: end;
+        }
+
+        .hero-card {
+            width: min(320px, 100%);
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+            background: radial-gradient(circle at top, #1b1b1b 0, #050505 65%);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card-accent {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%),
+                radial-gradient(circle at 0% 0%, rgba(255,255,255,0.18), transparent 55%);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .hero-card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-avatar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .hero-avatar-img {
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: #111;
+        }
+
+        .hero-avatar-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-avatar-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .hero-avatar-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .hero-avatar-role {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+        }
+
+        .hero-line {
+            border-top: 1px dashed rgba(255,255,255,0.16);
+            margin: 10px 0 14px;
+        }
+
+        .hero-metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 10px;
         }
 
-        .skill-card {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: #f8f9ff;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+        .metric {
+            padding: 9px 10px;
+            border-radius: 12px;
+            background: #ffffff06;
+            border: 1px solid rgba(255,255,255,0.14);
+            font-size: 0.78rem;
         }
 
-        .skill-card:hover {
-            transform: translateY(-5px);
-            border-color: #667eea;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        .metric-label {
+            color: var(--fg-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
 
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #667eea;
+        .metric-value {
+            font-size: 0.9rem;
         }
 
-        .github-section {
-            background: #f8f9ff;
-            padding: 3rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            text-align: center;
+        .hero-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
         }
 
-        .github-stats {
+        .social-inline {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-inline a {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .social-inline a:hover {
+            background: #ffffff20;
+            transform: translateY(-1px);
+        }
+
+        /* --------------------- SECTIONS --------------------- */
+
+        section {
+            margin-top: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .section-sub {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+        }
+
+        .section-card {
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            background: radial-gradient(circle at top left, #171717 0, #050505 65%);
+            padding: 18px 18px 16px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        /* ABOUT / SUMMARY */
+        .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+            gap: 26px;
         }
 
-        .github-stat {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+        .summary-text {
+            font-size: 0.9rem;
+            color: var(--fg-muted);
+            line-height: 1.9;
         }
 
-        .github-stat:hover {
-            transform: translateY(-5px);
+        .summary-highlight {
+            font-size: 0.9rem;
+            padding: 12px 12px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.16);
+            background: #ffffff05;
         }
 
-        .github-stat i {
-            font-size: 2rem;
-            color: #667eea;
-            margin-bottom: 1rem;
+        .summary-highlight-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 6px;
+            color: var(--fg-muted);
         }
 
+        .summary-highlight-list {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--fg-muted);
+        }
+
+        .summary-highlight-list li {
+            margin-bottom: 5px;
+        }
+
+        /* EXPERIENCE */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(0, 2fr);
+            gap: 14px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #ffffff03;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.08), transparent 40%);
+            opacity: 0;
+            transition: opacity var(--transition-med);
+        }
+
+        .timeline-item:hover::before {
+            opacity: 1;
+        }
+
+        .timeline-main-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .timeline-main-sub {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+            margin-top: 2px;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            color: var(--fg-muted);
+        }
+
+        .timeline-metrics {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        .timeline-metrics ul {
+            list-style: none;
+        }
+
+        .timeline-metrics li::before {
+            content: "– ";
+            color: var(--fg-muted);
+        }
+
+        /* PROJECTS */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
         }
 
-        .project-card {
-            background: #fff;
-            border-radius: 15px;
+        .project {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.16);
+            background: #ffffff04;
+            padding: 12px 12px 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 2px solid #f0f0f0;
+            transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med);
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #667eea;
+        .project::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.24), transparent 55%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-med);
         }
 
-        .project-header {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 2rem;
-            text-align: center;
+        .project:hover {
+            transform: translateY(-3px) translateZ(0);
+            box-shadow: var(--shadow-soft);
+            border-color: rgba(255,255,255,0.35);
         }
 
-        .project-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .project:hover::after {
+            opacity: 0.12;
         }
 
-        .project-content {
-            padding: 2rem;
+        .project-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .project-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .project-type {
+            font-size: 0.75rem;
+            color: var(--fg-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .project-desc {
+            font-size: 0.83rem;
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        .project-meta {
+            font-size: 0.78rem;
+            color: var(--fg-muted);
+        }
+
+        .project-meta strong {
+            color: var(--fg);
         }
 
         .project-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
         }
 
         .project-link {
+            font-size: 0.75rem;
+            padding: 4px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            gap: 6px;
+            background: transparent;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .project-link i {
+            font-size: 0.7rem;
         }
 
         .project-link:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
+            background: #ffffff18;
+            transform: translateY(-1px);
         }
 
-        .contact-content {
+        /* SKILLS */
+        .skills-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+            gap: 22px;
         }
 
-        .contact-info {
-            space-y: 2rem;
+        .skill-group-title {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--fg-muted);
+            margin-bottom: 6px;
+        }
+
+        .skills-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-chip {
+            font-size: 0.8rem;
+            padding: 5px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: #ffffff06;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat-box {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 9px 10px;
+            background: #ffffff05;
+            font-size: 0.8rem;
+            color: var(--fg-muted);
+        }
+
+        .stat-box strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--fg);
+            margin-bottom: 2px;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+            gap: 24px;
+        }
+
+        .contact-list {
+            display: grid;
+            gap: 10px;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f8f9ff;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            background: #667eea;
-            color: white;
+            gap: 10px;
+            padding: 8px 9px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.16);
+            background: #ffffff05;
+            font-size: 0.83rem;
         }
 
         .contact-icon {
-            font-size: 1.5rem;
-            color: #667eea;
-            width: 30px;
-        }
-
-        .contact-item:hover .contact-icon {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.24);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
+            font-size: 0.75rem;
         }
 
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        .contact-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--fg-muted);
+        }
+
+        .contact-value {
+            font-size: 0.84rem;
+        }
+
+        .contact-right-text {
+            font-size: 0.86rem;
+            color: var(--fg-muted);
+            line-height: 1.9;
+        }
+
+        .contact-right-actions {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-circles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 12px;
+        }
+
+        .social-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .social-circle:hover {
+            background: #ffffff25;
+            transform: translateY(-1px);
         }
 
         footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 2rem;
+            margin-top: 36px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.78rem;
+            color: var(--fg-muted);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        footer a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* --------------------- INTERACTIONS / ANIMATIONS --------------------- */
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 380ms ease-out, transform 380ms ease-out;
+        }
+
+        [data-animate].visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --------------------- RESPONSIVE --------------------- */
+        @media (max-width: 880px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 28px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .hero-right {
+                justify-self: flex-start;
+            }
+
+            .summary-grid,
+            .skills-layout,
+            .contact-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .timeline-item {
+                grid-template-columns: minmax(0, 1fr);
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 720px) {
             .nav-links {
                 display: none;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .nav-cta {
+                gap: 6px;
             }
 
-            .about-content {
-                grid-template-columns: 1fr;
+            .hero {
+                padding-top: 16px;
             }
 
-            .contact-content {
-                grid-template-columns: 1fr;
+            .page {
+                padding-inline: 14px;
             }
 
-            .cta-buttons {
+            .hero-card {
+                width: 100%;
+            }
+
+            .section-card {
+                padding-inline: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                letter-spacing: 0.06em;
+            }
+
+            .badge-row {
+                gap: 7px;
+            }
+
+            .hero-actions {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
             }
 
-            .github-stats {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            .btn-primary,
+            .btn-ghost {
+                justify-content: center;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <div class="logo">Mohammed Ibrahim</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#github">GitHub</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="page">
+            <nav class="nav">
+                <div class="nav-left">
+                    <div class="nav-logo">MI</div>
+                    <div class="nav-name-role">
+                        <div class="nav-name">Mohammed Ibrahim</div>
+                        <div class="nav-role">AI & Full‑Stack Engineer</div>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="#about">Profile</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#research">Research</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="nav-cta">
+                    <div class="pill">
+                        <i class="fa-solid fa-location-dot"></i>
+                        VIT Vellore · 2023–27
+                    </div>
+                    <a href="#contact" class="btn-small">
+                        <i class="fa-regular fa-envelope"></i>
+                        Reach out
+                    </a>
+                </div>
+            </nav>
+        </div>
     </header>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="profile-img">
-                    <img src="photo_page-0001.jpg" alt="Mohammed Ibrahim" style="width: 100%; height: 100%; border-radius: 50%;">
+    <main class="page">
+        <!-- HERO -->
+        <section id="home" class="hero">
+            <div>
+                <div class="badge-row" data-animate>
+                    <span class="badge">
+                        <i class="fa-solid fa-microchip-ai"></i>
+                        AI · Distributed Systems · Full‑Stack
+                    </span>
+                    <span class="badge">
+                        <i class="fa-regular fa-lightbulb"></i>
+                        1× Patent filed
+                    </span>
+                    <span class="badge">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        Performance‑driven builds
+                    </span>
                 </div>
-                <h1>Mohammed Ibrahim</h1>
-                <p>B.Tech CSE Student | Full Stack Developer | Research Enthusiast</p>
-                <p>VIT Vellore University | Reg No: 23BCE2066</p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i>
-                        Get In Touch
+
+                <h1 class="hero-title" data-animate>
+                    Designing reliable systems for real‑world impact
+                </h1>
+
+                <p class="hero-sub" data-animate>
+                    Computer Science undergraduate at VIT Vellore with a strong foundation in <strong>AI, distributed systems, and full‑stack engineering</strong>. I build scalable, secure applications and contribute to applied machine learning research, including a filed patent for accessibility‑driven garment matching.
+                </p>
+
+                <div class="hero-meta" data-animate>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-label">Current CGPA</div>
+                        <div class="hero-meta-value">8.88 / 10</div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-label">Graduation</div>
+                        <div class="hero-meta-value">B.Tech CSE · May 2027</div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-label">Academics</div>
+                        <div class="hero-meta-value">10th: 10.0 GPA · 12th: 94.3%</div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-label">Location</div>
+                        <div class="hero-meta-value">Vellore, Tamil Nadu</div>
+                    </div>
+                </div>
+
+                <div class="hero-actions" data-animate>
+                    <a href="#contact" class="btn-primary">
+                        <i class="fa-regular fa-paper-plane"></i>
+                        Contact for internships & roles
                     </a>
-                    <a href="https://github.com/Ibrubicks" class="btn btn-secondary" target="_blank">
+                    <a href="https://github.com/Ibrubicks" target="_blank" class="btn-ghost" rel="noreferrer">
                         <i class="fab fa-github"></i>
                         View GitHub
                     </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a passionate Computer Science Engineering student at VIT Vellore with a strong academic record and hands-on experience in full-stack development. Currently maintaining an impressive 8.72 CGPA, I'm dedicated to leveraging technology to solve real-world problems.</p>
-                    
-                    <p>My journey includes practical experience as a Web Developer at Kwikcut (a startup at VIT TBI), where I've honed my skills in modern web technologies. I'm also actively engaged in research, working under VIT professors on cutting-edge projects including fuzzy technology applications.</p>
-                    
-                    <p>I'm passionate about competitive programming and regularly practice Data Structures and Algorithms on platforms like LeetCode. My GitHub repository showcases my problem-solving journey and algorithmic implementations, demonstrating my commitment to continuous improvement in programming fundamentals.</p>
-                    
-                    <p>I'm passionate about continuous learning and staying updated with the latest technological trends. My goal is to contribute meaningfully to the tech industry while building innovative solutions that make a difference.</p>
-                </div>
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number">8.72</div>
-                        <div>Current CGPA</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">10.0</div>
-                        <div>10th Grade GPA</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">95%</div>
-                        <div>12th Grade</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">4+</div>
-                        <div>GitHub Repos</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-python"></i></div>
-                    <h3>Python</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>C/C++</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-java"></i></div>
-                    <h3>Java</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-html5"></i></div>
-                    <h3>HTML5</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
-                    <h3>CSS3</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-js"></i></div>
-                    <h3>JavaScript</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fab fa-react"></i></div>
-                    <h3>React.js</h3>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <h3>Databases</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="github" class="github-section">
-        <div class="container">
-            <h2 class="section-title" style="color: #333;">GitHub Portfolio</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
-                Explore my coding journey and contributions across multiple repositories
-            </p>
-            
-            <div class="github-stats">
-                <div class="github-stat">
-                    <i class="fab fa-github"></i>
-                    <h3>4+</h3>
-                    <p>Repositories</p>
-                </div>
-                <div class="github-stat">
-                    <i class="fas fa-code-branch"></i>
-                    <h3>Active</h3>
-                    <p>Development</p>
-                </div>
-                <div class="github-stat">
-                    <i class="fas fa-star"></i>
-                    <h3>Quality</h3>
-                    <p>Code</p>
-                </div>
-                <div class="github-stat">
-                    <i class="fas fa-rocket"></i>
-                    <h3>Innovative</h3>
-                    <p>Projects</p>
+                    <a href="Resume.pdf" class="btn-ghost" target="_blank" rel="noreferrer">
+                        <i class="fa-regular fa-file-lines"></i>
+                        View résumé
+                    </a>
                 </div>
             </div>
 
-            <div style="margin-top: 2rem;">
-                <a href="https://github.com/Ibrubicks" class="btn btn-primary" target="_blank" style="font-size: 1.1rem; padding: 15px 40px;">
-                    <i class="fab fa-github"></i>
-                    Visit My GitHub Profile
-                </a>
+            <div class="hero-right" data-animate>
+                <article class="hero-card">
+                    <div class="hero-card-accent"></div>
+                    <div class="hero-card-inner">
+                        <div class="hero-avatar">
+                            <div class="hero-avatar-img">
+                                <!-- Replace src with your actual photo path -->
+                                <img src="photo_page-0001.jpg" alt="Mohammed Ibrahim">
+                            </div>
+                            <div class="hero-avatar-text">
+                                <div class="hero-avatar-name">Mohammed Ibrahim</div>
+                                <div class="hero-avatar-role">Building secure, performant systems</div>
+                            </div>
+                        </div>
+
+                        <div class="hero-line"></div>
+
+                        <div class="hero-metrics">
+                            <div class="metric">
+                                <div class="metric-label">Startup Impact</div>
+                                <div class="metric-value">6+ production modules · 25% faster pages · 18% lower API latency</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Systems & AI</div>
+                                <div class="metric-value">FHIR‑compliant healthcare exchange · hybrid ML–simulation for diabetes risk</div>
+                            </div>
+                        </div>
+
+                        <div class="hero-card-footer">
+                            <span>Open to backend, full‑stack, and ML roles</span>
+                            <div class="social-inline">
+                                <a href="mailto:mohammed.ibrahim2023@vitstudent.ac.in" title="Email">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </a>
+                                <a href="https://github.com/Ibrubicks" target="_blank" title="GitHub" rel="noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="tel:+919121568926" title="Call">
+                                    <i class="fa-solid fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Projects & Experience</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-car"></i></div>
-                        <h3>AutoCare Pro</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>A comprehensive car maintenance management application that helps users track their vehicle's service history, schedule maintenance, add repairs and fixes, and monitor maintenance costs. Features include service tracking, cost analysis, and maintenance reminders.</p>
-                        <p><strong>Technologies:</strong> Full Stack Development</p>
-                        <p><strong>Features:</strong> Service Management, Cost Tracking, Maintenance History</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-utensils"></i></div>
-                        <h3>SwiftBites</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>A comprehensive food delivery application built using modern web technologies. Features include real-time order tracking, user authentication, and responsive design for optimal user experience across devices.</p>
-                        <p><strong>Technologies:</strong> React.js, JavaScript, CSS3, HTML5</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-code"></i></div>
-                        <h3>DSA Problem Solving</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Actively practicing Data Structures and Algorithms on LeetCode with a comprehensive GitHub repository. Consistently solving problems to strengthen problem-solving skills and algorithmic thinking.</p>
-                        <p><strong>Platform:</strong> LeetCode</p>
-                        <p><strong>Focus:</strong> Algorithms, Data Structures, Problem Solving</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks/DSA" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                DSA Solutions
-                            </a>
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fas fa-code"></i>
-                                All Repos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-brain"></i></div>
-                        <h3>Fuzzy Technology Research</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Research paper on fuzzy technology applications in computer science. The research explores innovative approaches to handling uncertainty and imprecision in computational systems.</p>
-                        <p><strong>Status:</strong> Yet to be published Research Paper</p>
-                        <p><strong>Focus:</strong> Fuzzy Logic, AI Applications</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                Research Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
-                        <h3>Kwikcut Internship</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Web Developer at Kwikcut, a startup incubated at VIT TBI. Developed and maintained web applications, collaborated with cross-functional teams, and contributed to product development strategies.</p>
-                        <p><strong>Role:</strong> Web Developer</p>
-                        <p><strong>Technologies:</strong> Full Stack Development</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Work
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-microscope"></i></div>
-                        <h3>Ongoing Research</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Currently working under VIT professor on an ongoing research project. Contributing to cutting-edge research in computer science with focus on practical applications and innovative solutions.</p>
-                        <p><strong>Status:</strong> In Progress</p>
-                        <p><strong>Supervision:</strong> Sanjibhan Sekhar Roy</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Ibrubicks" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                Research Updates
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <!-- ABOUT / SUMMARY -->
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">Profile</h2>
+                <p class="section-sub">Brief snapshot of what I bring to a team</p>
             </div>
-        </div>
-    </section>
+            <article class="section-card" data-animate>
+                <div class="summary-grid">
+                    <div class="summary-text">
+                        I am a Computer Science undergraduate at Vellore Institute of Technology with a strong foundation in AI, distributed systems, and full‑stack engineering. I enjoy translating ambiguous, real‑world requirements into robust system designs with clear trade‑offs.
+                        <br><br>
+                        My experience ranges from shipping production features in a startup environment to designing secure healthcare interoperability systems and building hybrid simulation–ML pipelines for long‑term risk forecasting. I care deeply about performance, reliability, and security—optimizing page loads, API latency, and data access patterns when it actually matters.
+                    </div>
+                    <aside class="summary-highlight">
+                        <div class="summary-highlight-title">Themes in my work</div>
+                        <ul class="summary-highlight-list">
+                            <li>Scalable full‑stack systems with measurable performance gains.</li>
+                            <li>Security‑first design (JWT, RBAC, AES‑256, auditability).</li>
+                            <li>Applied machine learning for healthcare and accessibility.</li>
+                            <li>Simulation‑driven modelling for interpretable risk trajectories.</li>
+                        </ul>
+                    </aside>
+                </div>
+            </article>
+        </section>
 
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <!-- EXPERIENCE -->
+        <section id="experience">
+            <div class="section-header">
+                <h2 class="section-title">Experience</h2>
+                <p class="section-sub">Where I’ve shipped, iterated, and learned quickly</p>
+            </div>
+            <article class="section-card" data-animate>
+                <div class="timeline">
+                    <div class="timeline-item">
                         <div>
-                            <strong>Email</strong><br>
-                            mohammed.ibrahim2023@vitstudent.ac.in
+                            <div class="timeline-main-title">Web Developer Intern · Kwikcut.com</div>
+                            <div class="timeline-main-sub">VIT‑TBI Incubated Startup · Vellore, Tamil Nadu</div>
+                            <div class="timeline-main-sub">React.js · Node.js · MongoDB · Agile</div>
+                            <div class="timeline-tags">
+                                <span class="tag">6+ production modules</span>
+                                <span class="tag">25% faster load</span>
+                                <span class="tag">18% lower API latency</span>
+                                <span class="tag">10+ full‑stack sprints</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                        <div>
-                            <strong>Phone</strong><br>
-                            +91 9121568926
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-university"></i></div>
-                        <div>
-                            <strong>University</strong><br>
-                            VIT Vellore, Tamil Nadu
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-graduation-cap"></i></div>
-                        <div>
-                            <strong>Course</strong><br>
-                            B.Tech CSE Core (2023-2027)
+                        <div class="timeline-metrics">
+                            <ul>
+                                <li>Built and maintained 6+ production‑ready web modules in a 5‑member team, contributing to feature delivery velocity improvements of around 30%.</li>
+                                <li>Implemented feature rollouts and optimizations that improved page‑load speed by 25% and reduced API latency by 18% through better caching, query tuning, and payload control.</li>
+                                <li>Participated in 10+ end‑to‑end sprint cycles under Agile methodology, improving sprint velocity by 15% by tightening feedback loops between frontend, backend, and product.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h3 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Let's Connect!</h3>
-                    <p style="text-align: center; font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
-                        I'm always open to discussing new opportunities, collaborations, and interesting projects. Whether you're looking for a dedicated intern or want to discuss technology and innovation, I'd love to hear from you!
-                    </p>
-                    <div class="social-links">
-                        <a href="https://github.com/Ibrubicks" class="social-link" target="_blank" title="GitHub Profile">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://github.com/Ibrubicks/DSA" class="social-link" target="_blank" title="DSA Solutions">
-                            <i class="fas fa-code"></i>
-                        </a>
-                        <a href="mailto:mohammed.ibrahim2023@vitstudent.ac.in" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="tel:+919121568926" class="social-link" title="Phone">
-                            <i class="fas fa-phone"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </article>
+        </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Mohammed Ibrahim. All rights reserved.</p>
-            <p>Built with passion for technology and innovation</p>
-            <p style="margin-top: 1rem;">
-                <a href="https://github.com/Ibrubicks" target="_blank" style="color: #667eea; text-decoration: none;">
-                    <i class="fab fa-github"></i> github.com/Ibrubicks
-                </a>
-            </p>
-        </div>
-    </footer>
+        <!-- PROJECTS -->
+        <section id="projects">
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-sub">Selected systems and applications I’ve built</p>
+            </div>
+            <article class="section-card" data-animate>
+                <div class="projects-grid">
+                    <!-- Healthcare Interoperability System -->
+                    <div class="project">
+                        <div class="project-top-row">
+                            <div>
+                                <div class="project-title">Healthcare Interoperability System</div>
+                                <div class="project-type">Systems · Security · AI</div>
+                            </div>
+                            <i class="fa-solid fa-hospital"></i>
+                        </div>
+                        <p class="project-desc">
+                            FHIR R4‑compliant cross‑hospital data exchange system with Epic/Cerner interoperability. Designed to support secure, standards‑aligned data sharing workflows across providers.
+                        </p>
+                        <p class="project-meta">
+                            <strong>Security:</strong> JWT, RBAC, AES‑256 encryption, audit trails, break‑glass access controls.<br>
+                            <strong>Stack:</strong> FastAPI, Oracle DB, React 19.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/Ibrubicks/healthcare-interoperability-system" target="_blank" rel="noreferrer" class="project-link">
+                                <i class="fab fa-github"></i>
+                                View repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- SwiftBites -->
+                    <div class="project">
+                        <div class="project-top-row">
+                            <div>
+                                <div class="project-title">SwiftBites · Food Delivery Web App</div>
+                                <div class="project-type">Full‑Stack · Realtime</div>
+                            </div>
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <p class="project-desc">
+                            Responsive food‑ordering platform for VIT students with real‑time order tracking using WebSockets and a focus on fast, reliable user experience under load.
+                        </p>
+                        <p class="project-meta">
+                            <strong>Performance:</strong> &lt; 2s average load time across 200+ test transactions on Vercel.<br>
+                            <strong>Stack:</strong> React.js, JavaScript, HTML, CSS.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/Ibrubicks/Swiftbites" target="_blank" rel="noreferrer" class="project-link">
+                                <i class="fab fa-github"></i>
+                                View repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Meshengers -->
+                    <div class="project">
+                        <div class="project-top-row">
+                            <div>
+                                <div class="project-title">Meshengers · Mesh Networking App</div>
+                                <div class="project-type">Networking · Mobile</div>
+                            </div>
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <p class="project-desc">
+                            Flutter‑based P2P messaging app using NearbyService over Wi‑Fi/Bluetooth for resilient, offline‑first communication across nearby Android devices.
+                        </p>
+                        <p class="project-meta">
+                            <strong>Reliability:</strong> &gt; 95% offline delivery success, custom multi‑node routing across up to 8 peers on mixed Android hardware.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/Ibrubicks/Mesh-Network" target="_blank" rel="noreferrer" class="project-link">
+                                <i class="fab fa-github"></i>
+                                View repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- AutoCare Pro -->
+                    <div class="project">
+                        <div class="project-top-row">
+                            <div>
+                                <div class="project-title">AutoCare Pro · Car Maintenance</div>
+                                <div class="project-type">Mobile · Analytics</div>
+                            </div>
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <p class="project-desc">
+                            Flutter app for logging vehicle services, repairs, and expenses, enabling owners to keep a structured maintenance history and cost overview on Android.
+                        </p>
+                        <p class="project-meta">
+                            <strong>Features:</strong> Smart maintenance reminders, cost‑summary analytics; tested with 100+ active users.<br>
+                            <strong>Stack:</strong> Flutter, Firebase/SQLite.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/Ibrubicks/AutoCare-Pro-web" target="_blank" rel="noreferrer" class="project-link">
+                                <i class="fab fa-github"></i>
+                                View repo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- RESEARCH -->
+        <section id="research">
+            <div class="section-header">
+                <h2 class="section-title">Research & Patent</h2>
+                <p class="section-sub">Applied ML & simulation work under VIT faculty</p>
+            </div>
+            <article class="section-card" data-animate>
+                <div class="timeline">
+                    <!-- Patent -->
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-main-title">Wardrobe Diversity & Garment Matching Enabler</div>
+                            <div class="timeline-main-sub">Patent Filed · Accessibility for Colour Blind Individuals</div>
+                            <div class="timeline-main-sub">With Prof. Padma Priya</div>
+                            <div class="timeline-tags">
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">Accessibility</span>
+                                <span class="tag">Human‑centred AI</span>
+                            </div>
+                        </div>
+                        <div class="timeline-metrics">
+                            <ul>
+                                <li>Developed AI‑based garment matching algorithms to assist colour‑blind users in selecting visually coherent outfits.</li>
+                                <li>Led system prototyping and patent application, focusing on practical UX and robustness across wardrobe variations.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Hybrid Simulation + ML -->
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-main-title">Hybrid Simulation & ML for Diabetes Risk</div>
+                            <div class="timeline-main-sub">Long‑term risk prediction under lifestyle variations</div>
+                            <div class="timeline-main-sub">With Prof. Jayashree J</div>
+                            <div class="timeline-tags">
+                                <span class="tag">Hybrid ML‑Simulation</span>
+                                <span class="tag">Healthcare</span>
+                                <span class="tag">Long‑horizon modelling</span>
+                            </div>
+                        </div>
+                        <div class="timeline-metrics">
+                            <ul>
+                                <li>Built a hybrid framework that couples simulation with ML models to forecast personalized, long‑term diabetes risk trajectories under different lifestyle scenarios.</li>
+                                <li>Emphasized interpretability so clinicians and users can compare “what‑if” pathways rather than only scalar risk scores.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Simulation-driven multi-scenario -->
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-main-title">Simulation‑Driven Multi‑Scenario Risk Forecasting</div>
+                            <div class="timeline-main-sub">Early diabetes & complication prediction</div>
+                            <div class="timeline-main-sub">With Prof. Vijayashree</div>
+                            <div class="timeline-tags">
+                                <span class="tag">Simulation</span>
+                                <span class="tag">Scenario analysis</span>
+                            </div>
+                        </div>
+                        <div class="timeline-metrics">
+                            <ul>
+                                <li>Designed a simulation engine to model diabetes progression and compare intervention strategies across multiple scenarios.</li>
+                                <li>Produced interpretable risk trajectories that help reason about timing and intensity of interventions, beyond a single risk estimate.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <div class="section-header">
+                <h2 class="section-title">Skills</h2>
+                <p class="section-sub">Languages, frameworks, and tools I use most</p>
+            </div>
+            <article class="section-card" data-animate>
+                <div class="skills-layout">
+                    <div>
+                        <div class="skill-group">
+                            <div class="skill-group-title">Languages</div>
+                            <div class="skills-chips">
+                                <span class="skill-chip">Python</span>
+                                <span class="skill-chip">Java</span>
+                                <span class="skill-chip">C</span>
+                                <span class="skill-chip">C++</span>
+                                <span class="skill-chip">JavaScript</span>
+                                <span class="skill-chip">SQL</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group" style="margin-top: 10px;">
+                            <div class="skill-group-title">Web & Frameworks</div>
+                            <div class="skills-chips">
+                                <span class="skill-chip">React.js</span>
+                                <span class="skill-chip">Node.js</span>
+                                <span class="skill-chip">FastAPI</span>
+                                <span class="skill-chip">Flutter</span>
+                                <span class="skill-chip">HTML</span>
+                                <span class="skill-chip">CSS</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group" style="margin-top: 10px;">
+                            <div class="skill-group-title">Databases</div>
+                            <div class="skills-chips">
+                                <span class="skill-chip">Oracle SQL</span>
+                                <span class="skill-chip">MongoDB</span>
+                                <span class="skill-chip">SQLite</span>
+                                <span class="skill-chip">Firebase</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="skill-group">
+                            <div class="skill-group-title">Tools & Platforms</div>
+                            <div class="skills-chips">
+                                <span class="skill-chip">Git</span>
+                                <span class="skill-chip">VS Code</span>
+                                <span class="skill-chip">PyCharm</span>
+                                <span class="skill-chip">Android Studio</span>
+                                <span class="skill-chip">AWS</span>
+                                <span class="skill-chip">Jupyter Notebook</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-row">
+                            <div class="stat-box">
+                                <strong>Production‑grade</strong>
+                                Startup modules shipped end‑to‑end.
+                            </div>
+                            <div class="stat-box">
+                                <strong>Research‑driven</strong>
+                                Patent + multiple healthcare ML projects.
+                            </div>
+                            <div class="stat-box">
+                                <strong>Systems focus</strong>
+                                Performance, security, reliability as defaults.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="section-header">
+                <h2 class="section-title">Contact</h2>
+                <p class="section-sub">Happy to discuss internships, projects, and collaborations</p>
+            </div>
+            <article class="section-card" data-animate>
+                <div class="contact-grid">
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                            <div>
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value">
+                                    <a href="mailto:mohammed.ibrahim2023@vitstudent.ac.in">
+                                        mohammed.ibrahim2023@vitstudent.ac.in
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <div class="contact-label">Phone</div>
+                                <div class="contact-value">
+                                    <a href="tel:+919121568926">+91&nbsp;91215&nbsp;68926</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+                            <div>
+                                <div class="contact-label">GitHub</div>
+                                <div class="contact-value">
+                                    <a href="https://github.com/Ibrubicks" target="_blank" rel="noreferrer">
+                                        github.com/Ibrubicks
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
+                            <div>
+                                <div class="contact-label">Portfolio</div>
+                                <div class="contact-value">
+                                    <a href="https://ibrubicks-portfolio.vercel.app" target="_blank" rel="noreferrer">
+                                        ibrubicks-portfolio.vercel.app
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="contact-right-text">
+                            I’m looking to work with teams that care about engineering rigour, clean architecture, and measurable outcomes. If you’re building something at the intersection of systems, AI, and product, I’d be glad to connect.
+                        </p>
+                        <div class="contact-right-actions">
+                            <a href="mailto:mohammed.ibrahim2023@vitstudent.ac.in" class="btn-primary">
+                                <i class="fa-regular fa-paper-plane"></i>
+                                Send an email
+                            </a>
+                            <a href="https://github.com/Ibrubicks" class="btn-ghost" target="_blank" rel="noreferrer">
+                                <i class="fab fa-github"></i>
+                                Browse code
+                            </a>
+                        </div>
+                        <div class="social-circles">
+                            <a href="https://github.com/Ibrubicks" class="social-circle" title="GitHub" target="_blank" rel="noreferrer">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:mohammed.ibrahim2023@vitstudent.ac.in" class="social-circle" title="Email">
+                                <i class="fa-regular fa-envelope"></i>
+                            </a>
+                            <a href="tel:+919121568926" class="social-circle" title="Phone">
+                                <i class="fa-solid fa-phone"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <footer>
+            <span>© 2025 Mohammed Ibrahim · All rights reserved.</span>
+            <span>Built without gradients—just black, white, and a focus on detail.</span>
+        </footer>
+    </main>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Smooth scroll for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetId = this.getAttribute('href');
+                if (!targetId || targetId === '#') return;
+                const target = document.querySelector(targetId);
                 if (target) {
+                    e.preventDefault();
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -802,71 +1478,21 @@
             });
         });
 
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
+        // IntersectionObserver for section animations
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
         });
 
-        // Add hover effects to project cards
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // GitHub stats animation
-        const statsObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const stats = entry.target.querySelectorAll('.github-stat');
-                    stats.forEach((stat, index) => {
-                        setTimeout(() => {
-                            stat.style.animation = 'fadeInUp 0.6s ease forwards';
-                        }, index * 100);
-                    });
-                }
-            });
-        }, observerOptions);
-
-        const githubSection = document.querySelector('.github-section');
-        if (githubSection) {
-            statsObserver.observe(githubSection);
-        }
-
-        // Add click tracking for external links
-        document.querySelectorAll('a[target="_blank"]').forEach(link => {
-            link.addEventListener('click', function() {
-                console.log('External link clicked:', this.href);
-            });
-        });
+        document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
+```
